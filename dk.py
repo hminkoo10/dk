@@ -1,5 +1,9 @@
 import discord
 from discord.ext import commands
+import sys
+import os
+import json
+import asyncio
 
 bot = commands.Bot(command_prefix=['/'])
 admin = ['724561925341446217','657773087571574784']
