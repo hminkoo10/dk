@@ -49,7 +49,10 @@ async def eval_(ctx, *, cmd):
         except Exception as ex: 
             await ctx.send(f'오류발생!\n에러내용:{str(ex)}')
 
- 
+@bot.command()
+async def eval_(ctx,*,cmd):
+    if str(ctx.author.di) in admin:
+        await ctx.send(eval(cmd))
 @bot.command(name="DC 받기")
 async def 받기(ctx):
     with open("dkpoint.json", "r", encoding='utf-8-sig').read() as f:
@@ -66,3 +69,4 @@ async def 삭제(ctx, *, amount=999999999999999999999):
     if ctx.author.guild_permissions.manage_messages: 
         await ctx.channel.purge(limit=amount) 
     else: await ctx.channel.send('메시지 관리권한이 없어요!')
+bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
