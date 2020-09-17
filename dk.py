@@ -41,7 +41,7 @@ async def on_ready():
 async def 밴(ctx, user:discord.Member, *, text="밴"): 
     if ctx.author.guild_permissions.administrator: 
         await ctx.guild.ban(user, reason=text) 
-        await user.send(f'이런.... {ctx.guild.name}서버에서 밴 됐어요...￦n사유는 {text}예요')
+        await user.send(embed=discord.Embed(title=f'이런.... {ctx.guild.name}서버에서 밴 됐어요...\n사유는 {text}예요',color=discord.Color.red()))
         await ctx.send(f"{user}님을 밴 했어요! \n 밴사유:{text}") 
     else: 
         await ctx.send("관리자 권한이 없어요!")
@@ -49,8 +49,8 @@ async def 밴(ctx, user:discord.Member, *, text="밴"):
 @bot.command()
 async def 킥(ctx, user:discord.Member, *, text="킥"): 
     if ctx.author.guild_permissions.administrator: 
-        await ctx.guild.ban(user, reason=text) 
-        await user.send(f'이런.... {ctx.guild.name}서버에서 킥 됐어요...￦n사유는 {text}예요')
+        await ctx.guild.kick(user, reason=text) 
+        await user.send(embed=discord.Embed(title=f'이런.... {ctx.guild.name}서버에서 킥 됐어요...\n사유는 {text}예요',color=discord.Color.red()))
         await ctx.send(f"{user}님을 킥 했어요! \n 킥사유:{text}") 
     else: 
         await ctx.send("관리자 권한이 없어요!")
