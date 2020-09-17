@@ -68,5 +68,6 @@ async def 받기(ctx):
 async def 삭제(ctx, *, amount=999999999999999999999): 
     if ctx.author.guild_permissions.manage_messages: 
         await ctx.channel.purge(limit=amount) 
-    else: await ctx.channel.send('메시지 관리권한이 없어요!')
+    else: 
+        await ctx.channel.send('메시지 관리권한이 없어요!')
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
