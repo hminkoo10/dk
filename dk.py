@@ -4,6 +4,8 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix=['/'])
 admin = ['724561925341446217','657773087571574784']
 
+with open("dkpoint.json", "r", encoding='utf-8-sig').read() as f:
+    point = json.loads(f)
 @bot.event
 async def on_ready():
     print(bot.user.name)
