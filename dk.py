@@ -25,7 +25,7 @@ async def 킥(ctx, user:discord.Member, *, text="킥"):
         await ctx.send(f"{user}님을 킥 했어요! \n 킥사유:{text}") 
     else: 
         await ctx.send("관리자 권한이 없어요!")
-@bot.command()
+@bot.command(name="eval")
 async def eval_(ctx, *, cmd): 
     if str(ctx.author.id) in admin:
         import ast
@@ -45,3 +45,6 @@ async def eval_(ctx, *, cmd):
             await ctx.send(result)
         except Exception as ex: 
             await ctx.send(f'오류발생!\n에러내용:{str(ex)}')
+
+ 
+@bot.command()
