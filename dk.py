@@ -50,4 +50,14 @@ async def eval_(ctx, *, cmd):
             await ctx.send(f'오류발생!\n에러내용:{str(ex)}')
 
  
-@bot.command()
+@bot.command(name="DC 받기")
+async def 받기(ctx):
+    with open("dkpoint.json", "r", encoding='utf-8-sig').read() as f:
+        point = json.loads(f)
+    try:
+        point[str(ctx.author.id)] += 1
+    except:
+        point[str(ctx.author.id)] = 1
+    with open(f"dkpoint.json", "w+", encoding='utf-8-sig') as f: 
+        json_string = json.dump(point, f, indent=2, ensure_ascii=False)
+    await ctx.send(f'{ctx.author.mention}님의 DC에 1DC를 추가했어요!')
