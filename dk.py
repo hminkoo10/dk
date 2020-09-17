@@ -6,6 +6,7 @@ import json
 import asyncio
 import ast
 import time
+from datetime import datetime
 
 bot = commands.Bot(command_prefix=['/'])
 admin = ['724561925341446217','657773087571574784']
@@ -179,4 +180,71 @@ async def 구매(ctx,an):
         await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 DC가 더 필요해요!',color=discord.Color.red()))
     with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
+@bot.listen()
+async def on_message(message):
+    if message.content.startswith("/공지"):
+
+        await message.delete()
+
+        if str(message.author.id) in admin:
+
+            now = datetime.now()
+            time = str(now.year) + "년 " + str(now.month) + "월 " + str(now.day) + "일 " + str(now.hour) + "시 " + str(now.minute) + "분 " + str(now.second) + "초"
+
+            embed = discord.Embed(color=0x00ff00)
+            embed.add_field(name="DK Country 공지", value="""
+            {}
+            """.format(message.content[3: ]), inline=False)
+            embed.set_footer(text=message.author.name + " - 인증됨 {}".format(time), icon_url=message.author.avatar_url)
+            message = await bot.get_channel(752778923989008455).send(embed=embed)
+            await asyncio.sleep(0.1)
+            await message.add_reaction("✅")
+
+        else:
+            now = datetime.now()
+            time = str(now.year) + "년 " + str(now.month) + "월 " + str(now.day) + "일 " + str(now.hour) + "시 " + str(now.minute) + "분 " + str(now.second) + "초"
+
+            embed = discord.Embed(color=0xff0000)
+            embed.add_field(name="오류", value="""
+            명령어를 실행할 수 없습니다.
+            사유: 명령어를 실행할 수 있는 권한이 없습니다.
+            """, inline=False)
+            embed.set_footer(text=message.author.name + " - 인증되지 않음 {}".format(time), icon_url=message.author.avatar_url)
+
+            message = await message.channel.send(embed=embed)
+            await asyncio.sleep(0.1)
+            await message.add_reaction("✅")
+    if message.content.startswith("/봇공지"):
+
+        await message.delete()
+
+        if str(message.author.id) in admin:
+
+            now = datetime.now()
+            time = str(now.year) + "년 " + str(now.month) + "월 " + str(now.day) + "일 " + str(now.hour) + "시 " + str(now.minute) + "분 " + str(now.second) + "초"
+
+            embed = discord.Embed(color=0x00ff00)
+            embed.add_field(name="DK Bot 봇공지", value="""
+            {}
+            """.format(message.content[3: ]), inline=False)
+            embed.set_footer(text=message.author.name + " - 인증됨 {}".format(time), icon_url=message.author.avatar_url)
+            message = await bot.get_channel(752780296109162566).send(embed=embed)
+            await asyncio.sleep(0.1)
+            await message.add_reaction("✅")
+            await asyncio.sleep(5)
+            await message.delete()
+        else:
+            now = datetime.now()
+            time = str(now.year) + "년 " + str(now.month) + "월 " + str(now.day) + "일 " + str(now.hour) + "시 " + str(now.minute) + "분 " + str(now.second) + "초"
+
+            embed = discord.Embed(color=0xff0000)
+            embed.add_field(name="오류", value="""
+            명령어를 실행할 수 없습니다.
+            사유: 명령어를 실행할 수 있는 권한이 없습니다.
+            """, inline=False)
+            embed.set_footer(text=message.author.name + " - 인증되지 않음 {}".format(time), icon_url=message.author.avatar_url)
+
+            message = await message.channel.send(embed=embed)
+            await asyncio.sleep(0.1)
+            await message.add_reaction("✅")
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
