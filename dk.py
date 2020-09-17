@@ -101,7 +101,7 @@ async def 받기(ctx):
     except:
         abcd = 10000000000000
     if not int(abcd) >= int('86400'):
-        await ctx.send(embed=discord.Embed(title='쿨타임이 안지났어요!',description=f'쿨타임이 {cool[str(ctx.author.id)] // 60}분 남았어요!',color=discord.Color.red()))
+        await ctx.send(embed=discord.Embed(title='쿨타임이 안지났어요!',description=f'쿨타임이 {(int(time.time()) - cool[str(ctx.author.id)]) // 60}분 남았어요!',color=discord.Color.red()))
         return
     cool[str(ctx.author.id)] = int(time.time())
     try:
@@ -231,8 +231,6 @@ async def on_message(message):
             message = await bot.get_channel(752780296109162566).send(embed=embed)
             await asyncio.sleep(0.1)
             await message.add_reaction("✅")
-            await asyncio.sleep(5)
-            await message.delete()
         else:
             now = datetime.now()
             time = str(now.year) + "년 " + str(now.month) + "월 " + str(now.day) + "일 " + str(now.hour) + "시 " + str(now.minute) + "분 " + str(now.second) + "초"
