@@ -100,7 +100,7 @@ async def 받기(ctx):
     except:
         abcd = 10000000000000
     if not int(abcd) >= int('86400'):
-        await ctx.send(embed=discord.Embed(title='쿨타임이 안지났어요!',color=discord.Color.red()))
+        await ctx.send(embed=discord.Embed(title='쿨타임이 안지났어요!',description=f'쿨타임이 {cool[str(ctx.author.id)] // 60}분 남았어요!',color=discord.Color.red()))
         return
     cool[str(ctx.author.id)] = int(time.time())
     try:
@@ -111,7 +111,7 @@ async def 받기(ctx):
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
     with open(f"dkcool.json", "w+", encoding='utf-8-sig') as f: 
         json_string = json.dump(cool, f, indent=2, ensure_ascii=False)
-    await ctx.send(embed=discord.Embed(title=f'<:cheer1:756028272231579688> {ctx.author}님의 DC에 1DC를 추가했어요! <:cheer2:756028062424105010>',description ="1일 후에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.gold()))
+    await ctx.send(embed=discord.Embed(title=f'<:cheer1:753782753173962877> {ctx.author}님의 DC에 1DC를 추가했어요! <:cheer2:753782752045826140>',description ="1일 후에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.gold()))
 @bot.command()
 async def 삭제(ctx, *, amount=999999999999999999999): 
     if ctx.author.guild_permissions.manage_messages: 
@@ -134,7 +134,7 @@ async def 관리자_돈추가(ctx, user: discord.Member, money1):
         point[str(user.id)] += int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 돈에서 {money1}원을 추가했어요!",color=discord.Color.green()))
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원을 추가했어요!",color=discord.Color.green()))
 @bot.command(name="dc빼기")
 async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
@@ -144,7 +144,7 @@ async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
         point[str(user.id)] -= int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 돈에서 {money1}원을 뺏어요!",color=discord.Color.green()))
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원을 뺏어요!",color=discord.Color.green()))
 @bot.command(name="dc설정")
 async def 관리자_돈설정(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
@@ -154,7 +154,7 @@ async def 관리자_돈설정(ctx, user: discord.Member, money1):
         point[str(user.id)] = int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 돈에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
 @bot.command()
 async def 상점(ctx):
     embed = discord.Embed(title='상점',color=discord.Color.orange())
