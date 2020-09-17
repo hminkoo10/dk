@@ -61,3 +61,8 @@ async def 받기(ctx):
     with open(f"dkpoint.json", "w+", encoding='utf-8-sig') as f: 
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
     await ctx.send(f'{ctx.author.mention}님의 DC에 1DC를 추가했어요!')
+@bot.command()
+async def 삭제(ctx, *, amount=999999999999999999999): 
+    if ctx.author.guild_permissions.manage_messages: 
+        await ctx.channel.purge(limit=amount) 
+    else: await ctx.channel.send('메시지 관리권한이 없어요!')
