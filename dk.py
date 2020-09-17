@@ -13,7 +13,9 @@ with open("dkpoint.json", "r", encoding='utf-8-sig').read() as f:
 @bot.event
 async def on_ready():
     print(bot.user.name)
-
+    await bot.change_presence(activity=discord.Streaming(name="DK Country의 관리를 돕고 있어요!",url="https://www.twitch.tv/dkcountry"))
+        
+        
 
 @bot.command()
 async def 밴(ctx, user:discord.Member, *, text="밴"): 
