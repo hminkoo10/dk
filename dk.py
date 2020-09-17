@@ -10,6 +10,7 @@ import time
 bot = commands.Bot(command_prefix=['/'])
 admin = ['724561925341446217','657773087571574784']
 item = {'6':10,'5':20,'4':30,'3':35,'2':50,'1':100}
+item2 = {'6':"🥉ㅣ브론즈 『Bronzes』",'5':"🥈ㅣ실버 『Silver』",'4':"🥇ㅣ골드 『Gold 』",'3':"🏅ㅣ플래티넘 『Platinum』",'2':"💎ㅣ다이아 『Diamond』",'1':"🏆ㅣ마스터 『Master』"}
 
 f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
 point = json.loads(f)
@@ -164,5 +165,18 @@ async def 상점(ctx):
     embed = embed.add_field(name=":five: 실버", value="<@&753035683198795778>:20DC", inline=True)
     embed = embed.add_field(name=":six: 브론즈", value="<@&753035721928867840>:10DC", inline=False)
     await ctx.send(embed=embed)
-
+@bot.command()
+async def 구매(ctx,an):
+    with open('dkpoint.json', 'r') as f:
+        jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
+        point = json.loads(jstring)
+    if point[str(ctx.author.id)] >= item[str(an)]:
+        role = discord.utils.get(ctx.guild.roles, name=f"{item2[str(an)]}")
+        await ctx.author.add_roles(role)
+        point[str(ctx.author.id)] -= int(item[str(an)])
+        await ctx.send(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
+    else:
+        await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 DC가 더 필요해요!',color=discord.Color.red()))
+    with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(point, f, indent=2, ensure_ascii=False)
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
