@@ -8,7 +8,7 @@ import ast
 import time
 from datetime import datetime
 
-bot = commands.Bot(command_prefix=['/'])
+bot = commands.Bot(command_prefix=['/','케이야 '])
 admin = ['724561925341446217','657773087571574784']
 item = {'6':10,'5':20,'4':30,'3':35,'2':50,'1':100}
 item2 = {'6':"🥉ㅣ브론즈 『Bronzes』",'5':"🥈ㅣ실버 『Silver』",'4':"🥇ㅣ골드 『Gold 』",'3':"🏅ㅣ플래티넘 『Platinum』",'2':"💎ㅣ다이아 『Diamond』",'1':"🏆ㅣ마스터 『Master』"}
@@ -166,6 +166,7 @@ async def 상점(ctx):
     embed = embed.add_field(name=":five: 실버", value="<@&753035683198795778>:20DC", inline=True)
     embed = embed.add_field(name=":six: 브론즈", value="<@&753035721928867840>:10DC", inline=False)
     embed = embed.add_field(name=":seven: 니트로", value="니트로:500DC", inline=False)
+    embed.set_footer(text="/구매 (아이템 번호) 로 아이템을 사보세요!, icon_url=ctx.author.avatar_url)
     await ctx.send(embed=embed)
 
 @bot.command()
@@ -173,6 +174,17 @@ async def 구매(ctx,an):
     with open('dkpoint.json', 'r') as f:
         jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
         point = json.loads(jstring)
+    if an == "7":
+        if point[str(ctx.author.id)] <= 500:
+            await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 DC가 더 필요해요!',color=discord.Color.red()))
+            return
+        else:
+            point[str(ctx.author.id)] -= 500
+            with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
+                json_string = json.dump(point, f, indent=2, ensure_ascii=False)
+            await bot.get_user(724561925341446217).send(f'{ctx.author}님이 니트로를 구매하셨어요!')
+            await ctx.send(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',description="토리님한테 얘기해 구매를 이여가세요",color=discord.Color.green()))
+            return
     if point[str(ctx.author.id)] >= item[str(an)]:
         role = discord.utils.get(ctx.guild.roles, name=f"{item2[str(an)]}")
         await ctx.author.add_roles(role)
