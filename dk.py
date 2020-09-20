@@ -158,7 +158,7 @@ async def 관리자_돈설정(ctx, user: discord.Member, money1):
         await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
 @bot.command()
 async def 상점(ctx):
-    embed = discord.Embed(title='상점',color=0x00ffae())
+    embed = discord.Embed(title='상점',color=0x00ffae)
     embed = embed.add_field(name=":one: 마스터", value="<@&753036029249978400>:100DC", inline=True)
     embed = embed.add_field(name=":two: 다이아", value="<@&753030296236195860>:50DC", inline=False)
     embed = embed.add_field(name=":three: 플래티넘", value="<@&753036226138865714>:35DC", inline=True)
