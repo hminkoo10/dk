@@ -166,7 +166,7 @@ async def 상점(ctx):
     embed = embed.add_field(name=":five: 실버", value="<@&753035683198795778>:20DC", inline=True)
     embed = embed.add_field(name=":six: 브론즈", value="<@&753035721928867840>:10DC", inline=False)
     embed = embed.add_field(name=":seven: 니트로", value="니트로:500DC", inline=False)
-    embed.set_footer(text="/구매 (아이템 번호) 로 아이템을 사보세요!, icon_url=ctx.author.avatar_url)
+    embed.set_footer(text="/구매 (아이템 번호) 로 아이템을 사보세요!, icon_url=ctx.author.avatar_url")
     await ctx.send(embed=embed)
 
 @bot.command()
