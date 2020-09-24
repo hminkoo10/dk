@@ -101,7 +101,7 @@ async def 받기(ctx):
     except:
         abcd = 10000000000000
     if not int(abcd) >= int('86400'):
-        await ctx.send(embed=discord.Embed(title='쿨타임이 않지났어요!',description=f'쿨타임이 {(int(time.time()) - cool[str(ctx.author.id)]) // 60}분 남았어요!',color=discord.Color.red()))
+        await ctx.send(embed=discord.Embed(title='쿨타임이 안 지났어요!',description=f'쿨타임이 {(int(time.time()) - cool[str(ctx.author.id)]) // 60}분 남았어요!',color=discord.Color.red()))
         return
     cool[str(ctx.author.id)] = int(time.time())
     try:
