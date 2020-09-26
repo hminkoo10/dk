@@ -12,6 +12,8 @@ from discord.utils import get
 import youtube_dl
 import os
 
+
+
 volumes = 25
 pf = []
 bot = commands.Bot(command_prefix=['/','케이야 '])
