@@ -1,4 +1,4 @@
-import discord
+﻿import discord
 from discord.ext import commands
 import sys
 import os
@@ -324,7 +324,7 @@ async def 구매(ctx,an):
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             await bot.get_user(724561925341446217).send(f'{ctx.author}님이 니트로를 구매하셨어요!')
-            await ctx.send(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',description="토리님한테 얘기해 구매를 이여가세요",color=discord.Color.green()))
+            await ctx.send(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',description="토리님한테 얘기해 구매를 이어가세요",color=discord.Color.green()))
             return
     if point[str(ctx.author.id)] >= item[str(an)]:
         role = discord.utils.get(ctx.guild.roles, name=f"{item2[str(an)]}")
