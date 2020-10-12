@@ -20,7 +20,10 @@ bot = commands.Bot(command_prefix=['/','케이야 '])
 admin = ['724561925341446217','657773087571574784']
 item = {'6':10,'5':20,'4':30,'3':35,'2':50,'1':100}
 item2 = {'6':"🥉ㅣ브론즈 『Bronzes』",'5':"🥈ㅣ실버 『Silver』",'4':"🥇ㅣ골드 『Gold 』",'3':"🏅ㅣ플래티넘 『Platinum』",'2':"💎ㅣ다이아 『Diamond』",'1':"🏆ㅣ마스터 『Master』"}
-
+jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
+warn = json.loads(jstring)
+jstring = open("warnlimit2.json", "r", encoding='utf-8-sig').read()
+warnlimit = json.loads(jstring)
 f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
 point = json.loads(f)
 
@@ -38,6 +41,11 @@ def insert_returns(body):
     # for with blocks, again we insert returns into the body
     if isinstance(body[-1], ast.With):
         insert_returns(body[-1].body)
+def ifadmin(ctx):
+    if str(ctx.author.id) in admin:
+        return True
+    else:
+        False
 @bot.event
 async def on_ready():
     print(bot.user.name)
@@ -426,4 +434,138 @@ async def 핑(ctx):
     time7 = f'{time6}ms'
     embed.add_field(name="디스코드 메시지 핑", value=f'{time7}')
     await edit.edit(embed=embed)
+@bot.command()
+async def 경고(ctx,user:discord.Member,limit:int,*,reason='None'):
+    global warnlimit
+    global warn
+    if ifadmin(ctx.author.id) == False:
+        return
+    jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
+    warn = json.loads(jstring)
+    jstring = open("warnlimit2.json", "r", encoding='utf-8-sig').read()
+    warnlimit = json.loads(jstring)
+    try:
+        warn[str(user.id)] += int(limit)
+        with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
+            json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
+    except:
+        warn[str(user.id)] = int(limit)
+        with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
+            json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
+    if warn[str(user.id)] >= int(warnlimit):
+        try:
+            await user.send(embed=discord.Embed(title="경고,밴 안내",description=f'당신은 경고 갯수가 {warnlimit}이상이 되어 이 봇에 의해 밴당했어요 :angry:!\n경고 사유 : {reason}',color=discord.Color.red()))
+        except:
+            pass
+        await ctx.guild.ban(user,reason=f'경고 한도 초과. 마지막 경고 {reason}')
+        del warn[str(user.id)]
+        c = await ctx.send(f'{str(user)}님이 경고한도 {warnlimit}({warn[str(user.id)]}/{warnlimit})를 초과하여 밴됬습니다')
+        await c.add_reaction('<a:complete:760472208774135868>')
+    else:
+        try:
+            await user.send(embed=discord.Embed(title="경고 안내",description=f'당신은 경고 {limit}개를 받아 경고 갯수가 {warn[str(user.id)]}/{warnlimit}가 되었어요 :angry:!\n경고 사유 : {reason}',color=discord.Color.red()))
+        except:
+            pass
+        await ctx.message.add_reaction('<a:complete:760472208774135868>')
+    with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
+@bot.command()
+async def 경고한도(ctx,limit:int):
+    global warnlimit
+    if ifadmin(ctx.author.id) == False:
+        return
+    with open(f"warnlimit2.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(limit, f, indent=2, ensure_ascii=False)
+    await ctx.message.add_reaction('<a:complete:760472208774135868>')
+@bot.command()
+async def 경고확인(ctx,user:discord.Member='None'):
+    if user == 'None':
+        user = ctx.author
+    jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
+    warn = json.loads(jstring)
+    jstring = open("warnlimit2.json", "r", encoding='utf-8-sig').read()
+    warnlimit = json.loads(jstring)
+    try:
+        await ctx.send(embed=discord.Embed(title=f'{str(user)}님의 경고는 {warn[str(user.id)]}/{warnlimit}개입니다!',color=discord.Color.blue()))
+    except:
+        await ctx.send(f'{str(user)}님은 경고를 받지 않았어요!')
+@bot.command()
+async def 경고초기화(ctx,user:discord.Member):
+    if ifadmin(str(ctx.author.id)) == False:
+        return
+    jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
+    warn = json.loads(jstring)
+    del warn[str(user.id)]
+    with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
+    await ctx.message.add_reaction('<a:complete:760472208774135868>')
+@bot.command()
+async def 경고삭제(ctx,user:discord.Member,limit:int):
+    if ifadmin(str(ctx.author.id)) == False:
+        return
+    jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
+    warn = json.loads(jstring)
+    try:
+        warn[str(user.id)] -= limit
+        if warn[str(user.id)] < 0:
+            await ctx.send(f'{str(user)}님 경고가 {limit}개 이하여서 경고를 삭제하지 못했어요!')
+            warn[str(user.id)] += limit
+            with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
+                json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
+            return
+    except:
+        await ctx.send(f'{str(user)}님은 경고를 받지 않았어요!')
+        return
+    with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
+    await ctx.message.add_reaction('<a:complete:760472208774135868>')
+@bot.command()
+#@has_permisssions(role_manger=True)
+@commands.check(ifadmin)
+async def 뮤트(ctx,user:discord.Member):
+    mutemessage = await ctx.send(embed=discord.Embed(title='뮤트안내',description=f'정말로 {str(user)}님을 뮤트하겠습니까?',color=discord.Color.red()))
+    await mutemessage.add_reaction('⭕')
+    await mutemessage.add_reaction('❌')
+    def check(user,reaction):
+        if user == ctx.author and str(reaction.emoji) == '⭕':
+            return True
+        elif user == ctx.author and str(reaction.emoji) == '❌':
+            return False
+    try:
+        await bot.wait_for('reaction_add',timeout=20,check=check)
+    except asyncio.TimeoutError:
+        await mutemessage.edit(embed=discord.Embed(title='만료됨',color=discord.Color.blue()))
+        return
+    else:
+        role = discord.utils.get(ctx.guild.roles, id=753455593104343060)
+        await user.add_role(role)
+        role = discord.utils.get(ctx.guild.roles, id=764615675582218250)
+        await user.remove_role(role)
+        await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 뮤트했습니다',color=discord.Color.green()))
+        return
+@bot.command()
+#@has_permisssions(role_manger=True)
+@commands.check(ifadmin)
+async def 언뮤트(ctx,user:discord.Member):
+    mutemessage = await ctx.send(embed=discord.Embed(title='뮤트안내',description=f'정말로 {str(user)}님을 언뮤트하겠습니까?',color=discord.Color.red()))
+    await mutemessage.add_reaction('⭕')
+    await mutemessage.add_reaction('❌')
+    muteinfo = 'yes'
+    def check(user,reaction):
+        if user == ctx.author and str(reaction.emoji) == '⭕':
+            return True
+        elif user == ctx.author and str(reaction.emoji) == '❌':
+            return False
+    try:
+        await bot.wait_for('reaction_add',timeout=20,check=check)
+    except asyncio.TimeoutError:
+        await mutemessage.edit(embed=discord.Embed(title='만료됨',color=discord.Color.blue()))
+        return
+    else:
+        role = discord.utils.get(ctx.guild.roles, id=753455593104343060)
+        await user.add_remove(role)
+        role = discord.utils.get(ctx.guild.roles, id=764615675582218250)
+        await user.add_role(role)
+        await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 언뮤트했습니다',color=discord.Color.green()))
+        return
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
