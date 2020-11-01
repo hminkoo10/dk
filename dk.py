@@ -637,7 +637,7 @@ async def 경고삭제(ctx,user:discord.Member,limit:int):
     with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
         json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
-@bot.command()
+#@bot.command()
 #@has_permisssions(role_manger=True)
 @commands.check(ifadmin)
 async def 뮤트(ctx,user:discord.Member):
@@ -661,7 +661,7 @@ async def 뮤트(ctx,user:discord.Member):
         await user.remove_role(role)
         await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 뮤트했습니다',color=discord.Color.green()))
         return
-@bot.command()
+#@bot.command()
 #@has_permisssions(role_manger=True)
 @commands.check(ifadmin)
 async def 언뮤트(ctx,user:discord.Member):
