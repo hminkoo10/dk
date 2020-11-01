@@ -556,7 +556,7 @@ async def 핑(ctx):
 async def 경고(ctx,user:discord.Member,limit:int,*,reason='None'):
     global warnlimit
     global warn
-    if ifadmin(ctx.author.id) == False:
+    if not str(ctx.author.id) in admin:
         return
     jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
     warn = json.loads(jstring)
@@ -590,7 +590,7 @@ async def 경고(ctx,user:discord.Member,limit:int,*,reason='None'):
 @bot.command()
 async def 경고한도(ctx,limit:int):
     global warnlimit
-    if ifadmin(ctx.author.id) == False:
+    if not str(ctx.author.id) in admin:
         return
     with open(f"warnlimit2.json", "w+", encoding='utf-8-sig') as f:
         json_string = json.dump(limit, f, indent=2, ensure_ascii=False)
@@ -609,7 +609,7 @@ async def 경고확인(ctx,user:discord.Member='None'):
         await ctx.send(f'{str(user)}님은 경고를 받지 않았어요!')
 @bot.command()
 async def 경고초기화(ctx,user:discord.Member):
-    if ifadmin(str(ctx.author.id)) == False:
+    if not str(ctx.author.id) in admin:
         return
     jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
     warn = json.loads(jstring)
@@ -619,7 +619,7 @@ async def 경고초기화(ctx,user:discord.Member):
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
 @bot.command()
 async def 경고삭제(ctx,user:discord.Member,limit:int):
-    if ifadmin(str(ctx.author.id)) == False:
+    if not str(ctx.author.id) in admin:
         return
     jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
     warn = json.loads(jstring)
