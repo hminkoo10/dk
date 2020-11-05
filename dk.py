@@ -240,7 +240,7 @@ async def eval__(ctx, *, cmd):
 async def eval_(ctx,*,cmd):
     if str(ctx.author.di) in admin:
         await ctx.send(eval(cmd))
-@bot.command(name="dc받기")
+@bot.command(name="dc받기",aliases=['돈받기'])
 async def 받기(ctx):
     import datetime
     f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
