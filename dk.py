@@ -17,7 +17,7 @@ import os
 volumes = 25
 pf = []
 INTENTS = discord.Intents.all()
-bot = commands.Bot(command_prefix=['//','케이야 '],intents=INTENTS)
+bot = commands.Bot(command_prefix=['/','케이야 '],intents=INTENTS)
 admin = ['724561925341446217','657773087571574784']
 item = {'6':10,'5':20,'4':30,'3':35,'2':50,'1':100}
 item2 = {'6':"🥉ㅣ브론즈 『Bronzes』",'5':"🥈ㅣ실버 『Silver』",'4':"🥇ㅣ골드 『Gold 』",'3':"🏅ㅣ플래티넘 『Platinum』",'2':"💎ㅣ다이아 『Diamond』",'1':"🏆ㅣ마스터 『Master』"}
@@ -670,7 +670,7 @@ async def 언뮤트(ctx,user:discord.Member):
     await mutemessage.add_reaction('<a:complete:760472208774135868>')
     await mutemessage.add_reaction('<a:pass:760474783606505503>')
     muteinfo = 'yes'
-    def check(users,reaction):
+    def check(reaction,users):
         return ctx.author.id == users.id and ctx.channel.id == reaction.message.channel.id
     try:
         reaction = await bot.wait_for('reaction_add',timeout=20,check=check)
