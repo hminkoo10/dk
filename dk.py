@@ -17,7 +17,7 @@ import os
 volumes = 25
 pf = []
 INTENTS = discord.Intents.all()
-bot = commands.Bot(command_prefix=['/','케이야 '],intents=INTENTS)
+bot = commands.Bot(command_prefix=['//','케이야 '],intents=INTENTS)
 admin = ['724561925341446217','657773087571574784']
 item = {'6':10,'5':20,'4':30,'3':35,'2':50,'1':100}
 item2 = {'6':"🥉ㅣ브론즈 『Bronzes』",'5':"🥈ㅣ실버 『Silver』",'4':"🥇ㅣ골드 『Gold 』",'3':"🏅ㅣ플래티넘 『Platinum』",'2':"💎ㅣ다이아 『Diamond』",'1':"🏆ㅣ마스터 『Master』"}
@@ -637,53 +637,55 @@ async def 경고삭제(ctx,user:discord.Member,limit:int):
     with open(f"warn2.json", "w+", encoding='utf-8-sig') as f:
         json_string = json.dump(warn, f, indent=2, ensure_ascii=False)
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
-#@bot.command()
-#@has_permisssions(role_manger=True)
-@commands.check(ifadmin)
+@bot.command()
 async def 뮤트(ctx,user:discord.Member):
+    if not str(ctx.author.id) in admin:
+        return
     mutemessage = await ctx.send(embed=discord.Embed(title='뮤트안내',description=f'정말로 {str(user)}님을 뮤트하겠습니까?',color=discord.Color.red()))
-    await mutemessage.add_reaction('⭕')
-    await mutemessage.add_reaction('❌')
-    def check(user,reaction):
-        if user == ctx.author and str(reaction.emoji) == '⭕':
-            return True
-        elif user == ctx.author and str(reaction.emoji) == '❌':
-            return False
+    await mutemessage.add_reaction('<a:complete:760472208774135868>')
+    await mutemessage.add_reaction('<a:pass:760474783606505503>')
+    def check(reaction,users):
+        return ctx.author.id == users.id and ctx.channel.id == reaction.message.channel.id
     try:
-        await bot.wait_for('reaction_add',timeout=20,check=check)
+        reaction = await bot.wait_for('reaction_add',timeout=20,check=check)
+        a = reaction[0]
     except asyncio.TimeoutError:
         await mutemessage.edit(embed=discord.Embed(title='만료됨',color=discord.Color.blue()))
         return
     else:
-        role = discord.utils.get(ctx.guild.roles, id=753455593104343060)
-        await user.add_role(role)
-        role = discord.utils.get(ctx.guild.roles, id=764615675582218250)
-        await user.remove_role(role)
-        await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 뮤트했습니다',color=discord.Color.green()))
-        return
-#@bot.command()
-#@has_permisssions(role_manger=True)
-@commands.check(ifadmin)
+        if str(a) == '<a:complete:760472208774135868>':
+            role = discord.utils.get(ctx.guild.roles, id=765840144745889832)
+            await user.add_roles(role)
+            role = discord.utils.get(ctx.guild.roles, id=765675273127198730)
+            await user.remove_roles(role)
+            await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 뮤트했습니다',color=discord.Color.green()))
+            return
+        elif str(a) == '<a:pass:760474783606505503>':
+            await mutemessage.edit(embed=discord.Embed(title='취소됨',color=discord.Color.red()))
+@bot.command()
 async def 언뮤트(ctx,user:discord.Member):
+    if not str(ctx.author.id) in admin:
+        return
     mutemessage = await ctx.send(embed=discord.Embed(title='뮤트안내',description=f'정말로 {str(user)}님을 언뮤트하겠습니까?',color=discord.Color.red()))
-    await mutemessage.add_reaction('⭕')
-    await mutemessage.add_reaction('❌')
+    await mutemessage.add_reaction('<a:complete:760472208774135868>')
+    await mutemessage.add_reaction('<a:pass:760474783606505503>')
     muteinfo = 'yes'
-    def check(user,reaction):
-        if user == ctx.author and str(reaction.emoji) == '⭕':
-            return True
-        elif user == ctx.author and str(reaction.emoji) == '❌':
-            return False
+    def check(users,reaction):
+        return ctx.author.id == users.id and ctx.channel.id == reaction.message.channel.id
     try:
-        await bot.wait_for('reaction_add',timeout=20,check=check)
+        reaction = await bot.wait_for('reaction_add',timeout=20,check=check)
+        a = reaction[0]
     except asyncio.TimeoutError:
         await mutemessage.edit(embed=discord.Embed(title='만료됨',color=discord.Color.blue()))
         return
     else:
-        role = discord.utils.get(ctx.guild.roles, id=753455593104343060)
-        await user.add_remove(role)
-        role = discord.utils.get(ctx.guild.roles, id=764615675582218250)
-        await user.add_role(role)
-        await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 언뮤트했습니다',color=discord.Color.green()))
-        return
+        if str(a) == '<a:complete:760472208774135868>':
+            role = discord.utils.get(ctx.guild.roles, id=765840144745889832)
+            await user.add_roles(role)
+            role = discord.utils.get(ctx.guild.roles, id=765840144745889832)
+            await user.remove_roles(role)
+            await mutemessage.edit(embed=discord.Embed(title='뮤트안내',description=f'{ctx.author.mention}님이 {user.mention}님을 언뮤트했습니다',color=discord.Color.green()))
+            return
+        elif str(a) == '<a:pass:760474783606505503>':
+            await mutemessage.edit(embed=discord.Embed(title='취소됨',color=discord.Color.red()))
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
