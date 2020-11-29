@@ -240,7 +240,7 @@ async def eval__(ctx, *, cmd):
 async def eval_(ctx,*,cmd):
     if str(ctx.author.di) in admin:
         await ctx.send(eval(cmd))
-@bot.command(name="dc받기",aliases=['돈받기'])
+@bot.command(name="코받기",aliases=['돈받기'])
 async def 받기(ctx):
     import datetime
     f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
@@ -257,7 +257,7 @@ async def 받기(ctx):
         point[str(ctx.author.id)] = 0
         test = True
     if test == False:
-        await ctx.send(embed=discord.Embed(title=f'이미 오늘({str(datetime.date.today())})dc를 받으셨습니다',color=discord.Color.red()))
+        await ctx.send(embed=discord.Embed(title=f'이미 오늘({str(datetime.date.today())})코인을 받으셨습니다',color=discord.Color.red()))
         return
     elif test == True:
         cool[str(ctx.author.id)] = str(datetime.date.today())
@@ -270,21 +270,21 @@ async def 받기(ctx):
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
     with open(f"dkcool.json", "w+", encoding='utf-8-sig') as f: 
         json_string = json.dump(cool, f, indent=2, ensure_ascii=False)
-    await ctx.send(embed=discord.Embed(title=f'<a:tada_gif:772304409941508107> {ctx.author}님의 DC에 1DC를 추가했어요! <a:tada_gif:772304409941508107>',description =f"{nexttime}에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.green()))
+    await ctx.send(embed=discord.Embed(title=f'<a:tada_gif:772304409941508107> {ctx.author}님의 코에 1코인추가했어요! <a:tada_gif:772304409941508107>',description =f"{nexttime}에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.green()))
 @bot.command()
 async def 삭제(ctx, *, amount=999999999999999999999): 
     if ctx.author.guild_permissions.manage_messages: 
         await ctx.channel.purge(limit=amount) 
     else: 
         await ctx.channel.send('메시지 관리권한이 없어요!')
-@bot.command(name="dc확인")
+@bot.command(name="코인확인")
 async def 확인(ctx,user:discord.Member="none"):
     if user == "none":
         user = ctx.author
     f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
     point = json.loads(f)
-    await ctx.send(embed=discord.Embed(title=f'지금 {user}님 DC는 {point[str(user.id)]}원이예요!',color=discord.Color.blue()))
-@bot.command(name="dc지급")
+    await ctx.send(embed=discord.Embed(title=f'지금 {user}님 코인 {point[str(user.id)]}원이예요!',color=discord.Color.blue()))
+@bot.command(name="코인지급")
 async def 관리자_돈추가(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
@@ -293,8 +293,8 @@ async def 관리자_돈추가(ctx, user: discord.Member, money1):
         point[str(user.id)] += int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원을 추가했어요!",color=discord.Color.green()))
-@bot.command(name="dc빼기")
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 코에서 {money1}원을 추가했어요!",color=discord.Color.green()))
+@bot.command(name="코빼기")
 async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
@@ -303,8 +303,8 @@ async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
         point[str(user.id)] -= int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원을 뺏어요!",color=discord.Color.green()))
-@bot.command(name="dc설정")
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 코에서 {money1}원을 뺏어요!",color=discord.Color.green()))
+@bot.command(name="코설정")
 async def 관리자_돈설정(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
@@ -313,19 +313,19 @@ async def 관리자_돈설정(ctx, user: discord.Member, money1):
         point[str(user.id)] = int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 DC에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 코에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
 @bot.command()
 async def 상점(ctx):
     jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
     point = json.loads(jstring)
     embed = discord.Embed(title='상점',color=0x00ffae)
-    embed = embed.add_field(name=":one: 마스터", value="<@&765706176725385226>:100DC", inline=True)
-    embed = embed.add_field(name=":two: 다이아", value="<@&765706625158742016>:50DC", inline=False)
-    embed = embed.add_field(name=":three: 플래티넘", value="<@&765706819049488474>:35DC", inline=True)
-    embed = embed.add_field(name=":four: 골드", value="<@&765706973962043392>:30DC", inline=False)
-    embed = embed.add_field(name=":five: 실버", value="<@&765707199967133696>:20DC", inline=True)
-    embed = embed.add_field(name=":six: 브론즈", value="<@&765707200299532309>:10DC", inline=False)
-    embed = embed.add_field(name=":seven: 니트로", value="니트로:500DC", inline=False)
+    embed = embed.add_field(name=":one: 마스터", value="<@&765706176725385226>:100코", inline=True)
+    embed = embed.add_field(name=":two: 다이아", value="<@&765706625158742016>:50코인", inline=False)
+    embed = embed.add_field(name=":three: 플래티넘", value="<@&765706819049488474>:35코인", inline=True)
+    embed = embed.add_field(name=":four: 골드", value="<@&765706973962043392>:30코인", inline=False)
+    embed = embed.add_field(name=":five: 실버", value="<@&765707199967133696>:20코인", inline=True)
+    embed = embed.add_field(name=":six: 브론즈", value="<@&765707200299532309>:10코", inline=False)
+    embed = embed.add_field(name=":seven: 니트로", value="니트로:500코", inline=False)
     embed.set_footer(text="아래 이모지 반응으로 구매해보세요!", icon_url=ctx.author.avatar_url)
     t = await ctx.send(embed=embed)
     await t.add_reaction(u'\U00000031\U0000FE0F\U000020E3')
@@ -361,7 +361,7 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('1')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('1')]}아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('1')]}아이템을 사려면 코인이 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
@@ -380,7 +380,7 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('2')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('2')]}아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('2')]}아이템을 사려면 코인 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
@@ -399,7 +399,7 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('3')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('3')]}아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('3')]}아이템을 사려면 코인이 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
@@ -418,7 +418,7 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('4')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('4')]}아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('4')]}아이템을 사려면 코인 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
@@ -437,7 +437,7 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('5')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('5')]}아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('5')]}아이템을 사려면 코인이 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
@@ -452,13 +452,13 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('6')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('6')]}아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('6')]}아이템을 사려면 코인이 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
     elif str(a) == "7️⃣":
         if point[str(ctx.author.id)] <= 500:
-            await ctx.send(embed=discord.Embed(title=f"니트로 아이템을 사려면 DC가 더 필요해요!",color=discord.Color.red()))
+            await ctx.send(embed=discord.Embed(title=f"니트로 아이템을 사려면 코인이 더 필요해요!",color=discord.Color.red()))
             return
         else:
             point[str(ctx.author.id)] -= 500
@@ -474,7 +474,7 @@ async def 구매(ctx,an):
         point = json.loads(jstring)
     if an == "7":
         if point[str(ctx.author.id)] <= 500:
-            await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 DC가 더 필요해요!',color=discord.Color.red()))
+            await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 코인이 더 필요해요!',color=discord.Color.red()))
             return
         else:
             point[str(ctx.author.id)] -= 500
@@ -489,7 +489,7 @@ async def 구매(ctx,an):
         point[str(ctx.author.id)] -= int(item[str(an)])
         await ctx.send(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
     else:
-        await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 DC가 더 필요해요!',color=discord.Color.red()))
+        await ctx.send(embed=discord.Embed(title=f'{an}아이템을 사려면 코인이 더 필요해요!',color=discord.Color.red()))
     with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
 @bot.listen()
@@ -688,4 +688,36 @@ async def 언뮤트(ctx,user:discord.Member):
             return
         elif str(a) == '<a:pass:760474783606505503>':
             await mutemessage.edit(embed=discord.Embed(title='취소됨',color=discord.Color.red()))
+@bot.listen()
+async def on_message(message):
+    if message.author.id == bot.user.id:
+        return
+    with open('msg.json', 'r') as f:
+        jstring = open("msg.json", "r", encoding='utf-8-sig').read()
+        msg = json.loads(jstring)
+    try:
+        msg[str(message.author.id)] += 1
+    except:
+        msg[str(message.author.id)] = 1
+    if msg[str(message.author.id)] == 80:
+        role = discord.utils.get(message.guild.roles, name="채팅 100회 이상")
+    elif msg[str(message.author.id)] == 200:
+        role = discord.utils.get(message.guild.roles, name="채팅 200회 이상")
+    elif msg[str(message.author.id)] == 300:
+        role = discord.utils.get(message.guild.roles, name="채팅 300회 이상")
+    elif msg[str(message.author.id)] == 1000:
+        role = discord.utils.get(message.guild.roles, name="채팅 1000회 이상")
+    elif msg[str(message.author.id)] == 5000:
+        role = discord.utils.get(message.guild.roles, name="채팅 5000회 이상")
+    else:
+        with open("msg.json", "w+", encoding='utf-8-sig') as f:
+            json_string = json.dump(msg, f, indent=2, ensure_ascii=False)
+        return
+    await message.author.add_roles(role)
+    await message.channel.send(f'축하합니다! 특별 역할이 지급돼셨습니다!')
+    #except:
+    #    msg[str(message.author.id)] = 1
+    with open("msg.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(msg, f, indent=2, ensure_ascii=False)
+
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
