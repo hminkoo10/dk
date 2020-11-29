@@ -27,6 +27,8 @@ jstring = open("warnlimit2.json", "r", encoding='utf-8-sig').read()
 warnlimit = json.loads(jstring)
 f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
 point = json.loads(f)
+f = open("msgcount.json", "r", encoding='utf-8-sig').read()
+msg = json.loads(f)
 
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
@@ -692,32 +694,26 @@ async def 언뮤트(ctx,user:discord.Member):
 async def on_message(message):
     if message.author.id == bot.user.id:
         return
-    with open('msg.json', 'r') as f:
-        jstring = open("msg.json", "r", encoding='utf-8-sig').read()
+    with open('msgcount.json', 'r') as f:
+        jstring = open("msgcount.json", "r", encoding='utf-8-sig').read()
         msg = json.loads(jstring)
+    jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
+    point = json.loads(jstring)
     try:
         msg[str(message.author.id)] += 1
     except:
         msg[str(message.author.id)] = 1
     if msg[str(message.author.id)] == 80:
-        role = discord.utils.get(message.guild.roles, name="채팅 100회 이상")
-    elif msg[str(message.author.id)] == 200:
-        role = discord.utils.get(message.guild.roles, name="채팅 200회 이상")
-    elif msg[str(message.author.id)] == 300:
-        role = discord.utils.get(message.guild.roles, name="채팅 300회 이상")
-    elif msg[str(message.author.id)] == 1000:
-        role = discord.utils.get(message.guild.roles, name="채팅 1000회 이상")
-    elif msg[str(message.author.id)] == 5000:
-        role = discord.utils.get(message.guild.roles, name="채팅 5000회 이상")
+        msg[str(message.author.id)] = 0
+        point[str(message.author.id)] += 1
     else:
-        with open("msg.json", "w+", encoding='utf-8-sig') as f:
+        with open("msgcount.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(msg, f, indent=2, ensure_ascii=False)
+        with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
+            json_string = json.dump(point, f, indent=2, ensure_ascii=False)
         return
-    await message.author.add_roles(role)
-    await message.channel.send(f'축하합니다! 특별 역할이 지급돼셨습니다!')
+    await message.channel.send(embed=discord.Embed(title='채팅 80회 이상으로 코인이 1개 지급되었습니다! 채팅 수가 초기화되었습니다.',color=discord.Color.green()))
     #except:
     #    msg[str(message.author.id)] = 1
-    with open("msg.json", "w+", encoding='utf-8-sig') as f:
-        json_string = json.dump(msg, f, indent=2, ensure_ascii=False)
 
 bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
