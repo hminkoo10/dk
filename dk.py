@@ -355,7 +355,7 @@ async def 상점(ctx):
         else:
             role = discord.utils.get(ctx.guild.roles, name=item2['2'])
             if not role in ctx.author.roles:
-                await ctx.send(embed=discord.Embed(title='그 전 엠블럼을 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
             if point[str(ctx.author.id)] >= item[str('1')]:
                 role = discord.utils.get(ctx.guild.roles, name=f"{item2[str('1')]}")
@@ -374,7 +374,7 @@ async def 상점(ctx):
         else:
             role = discord.utils.get(ctx.guild.roles, name=item2['3'])
             if not role in ctx.author.roles:
-                await ctx.send(embed=discord.Embed(title='그 전 엠블럼을 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
             if point[str(ctx.author.id)] >= item[str('2')]:
                 role = discord.utils.get(ctx.guild.roles, name=f"{item2[str('2')]}")
@@ -393,7 +393,7 @@ async def 상점(ctx):
         else:
             role = discord.utils.get(ctx.guild.roles, name=item2['4'])
             if not role in ctx.author.roles:
-                await ctx.send(embed=discord.Embed(title='그 전 엠블럼을 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
             if point[str(ctx.author.id)] >= item[str('3')]:
                 role = discord.utils.get(ctx.guild.roles, name=f"{item2[str('3')]}")
@@ -412,7 +412,7 @@ async def 상점(ctx):
         else:
             role = discord.utils.get(ctx.guild.roles, name=item2['5'])
             if not role in ctx.author.roles:
-                await ctx.send(embed=discord.Embed(title='그 전 엠블럼을 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
             if point[str(ctx.author.id)] >= item[str('4')]:
                 role = discord.utils.get(ctx.guild.roles, name=f"{item2[str('4')]}")
@@ -431,7 +431,7 @@ async def 상점(ctx):
         else:
             role = discord.utils.get(ctx.guild.roles, name=item2['6'])
             if not role in ctx.author.roles:
-                await ctx.send(embed=discord.Embed(title='그 전 엠블럼을 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
                 return
             if point[str(ctx.author.id)] >= item[str('5')]:
                 role = discord.utils.get(ctx.guild.roles, name=f"{item2[str('5')]}")
