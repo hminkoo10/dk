@@ -272,7 +272,7 @@ async def 받기(ctx):
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
     with open(f"dkcool.json", "w+", encoding='utf-8-sig') as f: 
         json_string = json.dump(cool, f, indent=2, ensure_ascii=False)
-    await ctx.send(embed=discord.Embed(title=f'<a:tada_gif:772304409941508107> {ctx.author}님의 코에 1코인추가했어요! <a:tada_gif:772304409941508107>',description =f"{nexttime}에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.green()))
+    await ctx.send(embed=discord.Embed(title=f'<a:tada_gif:772304409941508107> {ctx.author}님의 코인에 1코인추가했어요! <a:tada_gif:772304409941508107>',description =f"{nexttime}에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.green()))
 @bot.command()
 async def 삭제(ctx, *, amount=999999999999999999999): 
     if ctx.author.guild_permissions.manage_messages: 
@@ -285,7 +285,7 @@ async def 확인(ctx,user:discord.Member="none"):
         user = ctx.author
     f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
     point = json.loads(f)
-    await ctx.send(embed=discord.Embed(title=f'지금 {user}님 코인 {point[str(user.id)]}원이예요!',color=discord.Color.blue()))
+    await ctx.send(embed=discord.Embed(title=f'지금 {user}님 코인은 {point[str(user.id)]}원이예요!',color=discord.Color.blue()))
 @bot.command(name="코인지급")
 async def 관리자_돈추가(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
@@ -295,8 +295,8 @@ async def 관리자_돈추가(ctx, user: discord.Member, money1):
         point[str(user.id)] += int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 코에서 {money1}원을 추가했어요!",color=discord.Color.green()))
-@bot.command(name="코빼기")
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 코인에서 {money1}원을 추가했어요!",color=discord.Color.green()))
+@bot.command(name="코인빼기")
 async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
@@ -305,8 +305,8 @@ async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
         point[str(user.id)] -= int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 코에서 {money1}원을 뺏어요!",color=discord.Color.green()))
-@bot.command(name="코설정")
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 코인에서 {money1}원을 뺏어요!",color=discord.Color.green()))
+@bot.command(name="코인설정")
 async def 관리자_돈설정(ctx, user: discord.Member, money1):
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
@@ -315,18 +315,18 @@ async def 관리자_돈설정(ctx, user: discord.Member, money1):
         point[str(user.id)] = int(money1)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
-        await ctx.send(embed=discord.Embed(title=f"{user}님의 코에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
+        await ctx.send(embed=discord.Embed(title=f"{user}님의 코인에서 {money1}원으로 설정했어요!",color=discord.Color.green()))
 @bot.command()
 async def 상점(ctx):
     jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
     point = json.loads(jstring)
     embed = discord.Embed(title='상점',color=0x00ffae)
-    embed = embed.add_field(name=":one: 마스터", value="<@&765706176725385226>:100코", inline=True)
+    embed = embed.add_field(name=":one: 마스터", value="<@&765706176725385226>:100코인", inline=True)
     embed = embed.add_field(name=":two: 다이아", value="<@&765706625158742016>:50코인", inline=False)
     embed = embed.add_field(name=":three: 플래티넘", value="<@&765706819049488474>:35코인", inline=True)
     embed = embed.add_field(name=":four: 골드", value="<@&765706973962043392>:30코인", inline=False)
     embed = embed.add_field(name=":five: 실버", value="<@&765707199967133696>:20코인", inline=True)
-    embed = embed.add_field(name=":six: 브론즈", value="<@&765707200299532309>:10코", inline=False)
+    embed = embed.add_field(name=":six: 브론즈", value="<@&765707200299532309>:10코인", inline=False)
     embed = embed.add_field(name=":seven: 니트로", value="니트로:500코", inline=False)
     embed.set_footer(text="아래 이모지 반응으로 구매해보세요!", icon_url=ctx.author.avatar_url)
     t = await ctx.send(embed=embed)
@@ -382,7 +382,7 @@ async def 상점(ctx):
                 point[str(ctx.author.id)] -= int(item[str('2')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
             else:
-                await ctx.send(embed=discord.Embed(title=f"{item2[str('2')]}아이템을 사려면 코인 더 필요해요!",color=discord.Color.red()))
+                await ctx.send(embed=discord.Embed(title=f"{item2[str('2')]}아이템을 사려면 코인이 더 필요해요!",color=discord.Color.red()))
             with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
