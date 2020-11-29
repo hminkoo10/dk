@@ -242,7 +242,7 @@ async def eval__(ctx, *, cmd):
 async def eval_(ctx,*,cmd):
     if str(ctx.author.di) in admin:
         await ctx.send(eval(cmd))
-@bot.command(name="코받기",aliases=['돈받기'])
+@bot.command(name="코인받기",aliases=['돈받기'])
 async def 받기(ctx):
     import datetime
     f = open("dkpoint.json", "r", encoding='utf-8-sig').read()
@@ -705,13 +705,20 @@ async def on_message(message):
         msg[str(message.author.id)] = 1
     if msg[str(message.author.id)] == 80:
         msg[str(message.author.id)] = 0
-        point[str(message.author.id)] += 1
+        try:
+            point[str(message.author.id)] += 1
+        except:
+            point[str(message.author.id)] = 1
     else:
         with open("msgcount.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(msg, f, indent=2, ensure_ascii=False)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
         return
+    with open("msgcount.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(msg, f, indent=2, ensure_ascii=False)
+    with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(point, f, indent=2, ensure_ascii=False)
     await message.channel.send(embed=discord.Embed(title='채팅 80회 이상으로 코인이 1개 지급되었습니다! 채팅 수가 초기화되었습니다.',color=discord.Color.green()))
     #except:
     #    msg[str(message.author.id)] = 1
