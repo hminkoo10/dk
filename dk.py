@@ -264,7 +264,6 @@ async def 받기(ctx):
     elif test == True:
         cool[str(ctx.author.id)] = str(datetime.date.today())
         point[str(ctx.author.id)] += 1
-        print('테스트')
     nexttime = str(int(str(datetime.date.today()).split('-')[1])) + '월 ' + str(int(str(datetime.date.today()).split('-')[2]) + 1) + '일'
     if nexttime == 32:
         nexttime = str(int(str(datetime.date.today()).split('-')[1])) + '월 ' + '1일'
@@ -272,7 +271,7 @@ async def 받기(ctx):
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
     with open(f"dkcool.json", "w+", encoding='utf-8-sig') as f: 
         json_string = json.dump(cool, f, indent=2, ensure_ascii=False)
-    await ctx.send(embed=discord.Embed(title=f'<a:tada_gif:772304409941508107> {ctx.author}님의 코인에 1코인추가했어요! <a:tada_gif:772304409941508107>',description =f"{nexttime}에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.green()))
+    await ctx.send(embed=discord.Embed(title=f'<a:tada_gif:772304409941508107> {ctx.author}님의 금고에 1코인추가했어요! <a:tada_gif:772304409941508107>',description =f"{nexttime}에 명령어를 다시 사용하실 수 있어요!",color=discord.Color.green()))
 @bot.command()
 async def 삭제(ctx, *, amount=999999999999999999999): 
     if ctx.author.guild_permissions.manage_messages: 
@@ -321,13 +320,13 @@ async def 상점(ctx):
     jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
     point = json.loads(jstring)
     embed = discord.Embed(title='상점',color=0x00ffae)
-    embed = embed.add_field(name=":one: 마스터", value="<@&765706176725385226>:100코인", inline=True)
-    embed = embed.add_field(name=":two: 다이아", value="<@&765706625158742016>:50코인", inline=False)
-    embed = embed.add_field(name=":three: 플래티넘", value="<@&765706819049488474>:35코인", inline=True)
-    embed = embed.add_field(name=":four: 골드", value="<@&765706973962043392>:30코인", inline=False)
-    embed = embed.add_field(name=":five: 실버", value="<@&765707199967133696>:20코인", inline=True)
-    embed = embed.add_field(name=":six: 브론즈", value="<@&765707200299532309>:10코인", inline=False)
-    embed = embed.add_field(name=":seven: 니트로", value="니트로:500코", inline=False)
+    embed = embed.add_field(name=":one: 마스터", value="<@&765706176725385226>\:100:coin:", inline=True)
+    embed = embed.add_field(name=":two: 다이아", value="<@&765706625158742016>:50:coin:", inline=False)
+    embed = embed.add_field(name=":three: 플래티넘", value="<@&765706819049488474>:35:coin:", inline=True)
+    embed = embed.add_field(name=":four: 골드", value="<@&765706973962043392>:30:coin:", inline=False)
+    embed = embed.add_field(name=":five: 실버", value="<@&765707199967133696>:20:coin:", inline=True)
+    embed = embed.add_field(name=":six: 브론즈", value="<@&765707200299532309>:10:coin:", inline=False)
+    embed = embed.add_field(name=":seven: 니트로", value="니트로:500:coin:", inline=False)
     embed.set_footer(text="아래 이모지 반응으로 구매해보세요!", icon_url=ctx.author.avatar_url)
     t = await ctx.send(embed=embed)
     await t.add_reaction(u'\U00000031\U0000FE0F\U000020E3')
@@ -349,11 +348,11 @@ async def 상점(ctx):
         pass
     a = f'{reaction[0]}'
     if str(a) == '1️⃣':
-        role = discord.utils.get(ctx.guild.roles, name=item2['1'])
+        role = discord.utils.get(ctx.guild.roles, id=765706176725385226)
         if role in ctx.author.roles:
             await ctx.send('이미 마스터를 구매하셨습니다')
         else:
-            role = discord.utils.get(ctx.guild.roles, name=item2['2'])
+            role = discord.utils.get(ctx.guild.roles, id=765706625158742016)
             if not role in ctx.author.roles:
                 await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
@@ -368,11 +367,11 @@ async def 상점(ctx):
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
     elif str(a) == '2️⃣':
-        role = discord.utils.get(ctx.guild.roles, name=item2['2'])
+        role = discord.utils.get(ctx.guild.roles, id=765706625158742016)
         if role in ctx.author.roles:
             await ctx.send('이미 다이아를 구매하셨습니다')
         else:
-            role = discord.utils.get(ctx.guild.roles, name=item2['3'])
+            role = discord.utils.get(ctx.guild.roles, id=765706819049488474)
             if not role in ctx.author.roles:
                 await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
@@ -387,11 +386,11 @@ async def 상점(ctx):
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
     elif str(a) == '3️⃣':
-        role = discord.utils.get(ctx.guild.roles, name=item2['3'])
+        role = discord.utils.get(ctx.guild.roles, id=765706819049488474)
         if role in ctx.author.roles:
             await ctx.send('이미 플래티넘를 구매하셨습니다')
         else:
-            role = discord.utils.get(ctx.guild.roles, name=item2['4'])
+            role = discord.utils.get(ctx.guild.roles, id=765706973962043392)
             if not role in ctx.author.roles:
                 await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
@@ -406,11 +405,11 @@ async def 상점(ctx):
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
     elif str(a) == '4️⃣':
-        role = discord.utils.get(ctx.guild.roles, name=item2['4'])
+        role = discord.utils.get(ctx.guild.roles, id=765706973962043392)
         if role in ctx.author.roles:
             await ctx.send('이미 골드를 구매하셨습니다')
         else:
-            role = discord.utils.get(ctx.guild.roles, name=item2['5'])
+            role = discord.utils.get(ctx.guild.roles, id=765707199967133696)
             if not role in ctx.author.roles:
                 await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 티어 구매가 가능합니다',color=discord.Color.red()))
                 return
@@ -425,11 +424,11 @@ async def 상점(ctx):
                 json_string = json.dump(point, f, indent=2, ensure_ascii=False)
             return
     elif str(a) == '5️⃣':
-        role = discord.utils.get(ctx.guild.roles, name=item2['5'])
+        role = discord.utils.get(ctx.guild.roles, id=765707199967133696)
         if role in ctx.author.roles:
             await ctx.send('이미 실버를 구매하셨습니다')
         else:
-            role = discord.utils.get(ctx.guild.roles, name=item2['6'])
+            role = discord.utils.get(ctx.guild.roles, id=765707200299532309)
             if not role in ctx.author.roles:
                 await ctx.send(embed=discord.Embed(title='그 전 티어를 구매해야 이 엠블럼 구매가 가능합니다',color=discord.Color.red()))
                 return
@@ -449,7 +448,8 @@ async def 상점(ctx):
             await ctx.send('이미 브론즈를 구매하셨습니다')
         else:
             if point[str(ctx.author.id)] >= item[str('6')]:
-                role = discord.utils.get(ctx.guild.roles, name=f"{item2[str('6')]}")
+                print(str(item2[str('6')]))
+                role = discord.utils.get(ctx.guild.roles, id=765707200299532309)
                 await ctx.author.add_roles(role)
                 point[str(ctx.author.id)] -= int(item[str('6')])
                 await t.edit(embed=discord.Embed(title=f'와우! 구매가 완료돼었어요!',color=discord.Color.green()))
@@ -723,4 +723,4 @@ async def on_message(message):
     #except:
     #    msg[str(message.author.id)] = 1
 
-bot.run('NzU1OTk2MTUwMzc2NTYyNzI5.X2LaRw.Lgbz6en8cr1bq5zemTd6URNrCmM')
+bot.run('Nzg3NTUzNTQ0ODA2NzI3Njgx.X9WoZQ.v_oKVsQU8IVTf2h5fPqK0Hh1xo0')
