@@ -5,6 +5,7 @@ import os
 import json
 import asyncio
 import ast
+import random
 import time
 from datetime import datetime
 from youtube_search import YoutubeSearch
@@ -722,5 +723,28 @@ async def on_message(message):
     await message.channel.send(embed=discord.Embed(title='채팅 80회 이상으로 코인이 1개 지급되었습니다! 채팅 수가 초기화되었습니다.',color=discord.Color.green()))
     #except:
     #    msg[str(message.author.id)] = 1
-
+@bot.command()
+async def 도박(ctx):
+        with open('dkpoint.json', 'r') as f:
+            jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
+        point = json.loads(jstring)
+        try:
+            print(point[str(ctx.author.id)])
+        except:
+            await ctx.send(embed=discord.Embed(title='코인을 보유하지 않습니다',color=discord.Color.red()))
+        if int(point[str(ctx.author.id)]) >= int('1'):
+            random_money_1 = [1,2,3,4,5,6]
+            random_money = random.choice(random_money_1)
+            if random_money == 2 or random_money == 4 or random_money == 6:
+                point[str(ctx.author.id)] += point[str(ctx.author.id)]
+                await ctx.send(embed=discord.Embed(title=f'도박에 성공했어요!\n코인이 2배로 늘어났습니다!\n현재 내 코인은 {point[str(ctx.author.id)]}원 이예요!', color=discord.Color.green()))
+                with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
+                    json_string = json.dump(point, f, indent=2, ensure_ascii=False)
+            else:
+                point[str(ctx.author.id)] -= point[str(ctx.author.id)]
+                with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
+                    json_string = json.dump(point, f, indent=2, ensure_ascii=False)
+                await ctx.send(embed=discord.Embed(title=f'이런... 도박에 실패했어요...\n모든코인이 사라졌습니다', color=discord.Color.red()))
+        else:
+            await ctx.send(embed=discord.Embed(title='코인이 0개이거나 1개여 도박이 필요없습니다',color=discord.Color.red()))
 bot.run('Nzg3NTUzNTQ0ODA2NzI3Njgx.X9WoZQ.v_oKVsQU8IVTf2h5fPqK0Hh1xo0')
