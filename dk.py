@@ -748,24 +748,24 @@ async def 도박(ctx):
         else:
             await ctx.send(embed=discord.Embed(title='코인이 0개이거나 1개여 도박이 필요없습니다',color=discord.Color.red()))
 @bot.command()
-async def 코인입금(ctx, user: discord.Member, money2):
+async def 코인입금(ctx, user: discord.Member, money2:int):
     jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
     point = json.loads(jstring)
     ababc = point[str(ctx.author.id)] - int(money2)
     n = money2 // 10
-    ababb = ababc - n
+    ababb = ababc + n
     if ababb <= int('-1'):
         await ctx.send("수수료를 포함해 자기 코인보다 더 많습니다")
     else:
         if money2 <= 1:
             await ctx.send('0이상의 정수를 입력 해 주세요!')
             return
-        point[str(ctx.author.id)] -= int(money2)
+        point[str(ctx.author.id)] -= int(ababb)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
         point[str(user.id)] += int(money2)
         with open("dkpoint.json", "w+", encoding='utf-8-sig') as f:
             json_string = json.dump(point, f, indent=2, ensure_ascii=False)
         user_money = point[str(ctx.author.id)]
-        await ctx.send(f'{user}님한테 {money2}원을 전달했어요! \n지금 내 코인은 {user_money}원이예요!\n수수료 : {n}원')
+        await ctx.send(embed=discord.Embed(title=f'{user}님한테 {money2}원을 전달했어요! \n지금 내 코인은 {user_money}원이예요!\n수수료 : {n}원',color=discord.Color.green()))
 bot.run('Nzg3NTUzNTQ0ODA2NzI3Njgx.X9WoZQ.v_oKVsQU8IVTf2h5fPqK0Hh1xo0')
