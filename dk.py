@@ -19,7 +19,7 @@ volumes = 25
 pf = []
 INTENTS = discord.Intents.all()
 bot = commands.Bot(command_prefix=['/','케이야 '],intents=INTENTS)
-admin = ['724561925341446217','657773087571574784','712290125505363980','674569768811888641','693983032595447829']
+admin = ['724561925341446217','724561925341446217','657773087571574784','712290125505363980','674569768811888641','693983032595447829']
 item = {'6':10,'5':20,'4':30,'3':35,'2':50,'1':100}
 item2 = {'6':"🥉ㅣ브론즈 『Bronzes』",'5':"🥈ㅣ실버 『Silver』",'4':"🥇ㅣ골드 『Gold 』",'3':"🏅ㅣ플래티넘 『Platinum』",'2':"💎ㅣ다이아 『Diamond』",'1':"🏆ㅣ마스터 『Master』"}
 jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
@@ -723,7 +723,7 @@ async def on_message(message):
     await message.channel.send(embed=discord.Embed(title='채팅 80회 이상으로 코인이 1개 지급되었습니다! 채팅 수가 초기화되었습니다.',color=discord.Color.green()))
     #except:
     #    msg[str(message.author.id)] = 1
-@bot.command()
+#@bot.command()
 async def 도박(ctx):
         with open('dkpoint.json', 'r') as f:
             jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
@@ -753,7 +753,7 @@ async def 코인입금(ctx, user: discord.Member, money2:int):
     point = json.loads(jstring)
     ababc = point[str(ctx.author.id)] - int(money2)
     n = money2 // 10
-    ababb = ababc + n
+    ababb = money2 + n
     if ababb <= int('-1'):
         await ctx.send("수수료를 포함해 자기 코인보다 더 많습니다")
     else:
