@@ -807,6 +807,17 @@ async def 관리자추가(ctx,user:discord.Member):
         json_string = json.dump(admin, f, indent=2, ensure_ascii=False)
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
 @bot.command()
+async def 관리자추가(ctx,user:discord.Member):
+    if not ctx.author.id == 712290125505363980:
+        await ctx.message.add_reaction('<a:pass:771038714935246890>')
+        return
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
+    admin.remove(str(user.id))
+    with open("admin.json", "w+", encoding='utf-8-sig') as f:
+        json_string = json.dump(admin, f, indent=2, ensure_ascii=False)
+    await ctx.message.add_reaction('<a:complete:760472208774135868>')
+@bot.command()
 async def 룰렛(ctx,*,ctn):
     import random,asyncio
     contents = ctn.split(' ')
