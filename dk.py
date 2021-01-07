@@ -47,6 +47,8 @@ def insert_returns(body):
     if isinstance(body[-1], ast.With):
         insert_returns(body[-1].body)
 def ifadmin(ids):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if str(ids) in admin:
         return True
     else:
@@ -209,7 +211,9 @@ async def 킥(ctx, user:discord.Member, *, text="킥"):
     else: 
         await ctx.send("관리자 권한이 없어요!")
 @bot.command(name="eval")
-async def eval__(ctx, *, cmd): 
+async def eval__(ctx, *, cmd):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if str(ctx.author.id) in admin:
         try:
             fn_name = "_eval_expr"
@@ -242,6 +246,8 @@ async def eval__(ctx, *, cmd):
             await ctx.send(f'오류발생!\n에러내용:{str(ex)}')
 @bot.command()
 async def eval_(ctx,*,cmd):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if str(ctx.author.di) in admin:
         await ctx.send(eval(cmd))
 @bot.command(name="코인받기",aliases=['돈받기'])
@@ -289,6 +295,8 @@ async def 확인(ctx,user:discord.Member="none"):
     await ctx.send(embed=discord.Embed(title=f'지금 {user}님 코인은 {point[str(user.id)]}원이예요!',color=discord.Color.blue()))
 @bot.command(name="코인지급")
 async def 관리자_돈추가(ctx, user: discord.Member, money1):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
             jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
@@ -299,6 +307,8 @@ async def 관리자_돈추가(ctx, user: discord.Member, money1):
         await ctx.send(embed=discord.Embed(title=f"{user}님의 코인에서 {money1}원을 추가했어요!",color=discord.Color.green()))
 @bot.command(name="코인빼기")
 async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
             jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
@@ -309,6 +319,8 @@ async def 관리자_돈뺴기(ctx, user: discord.Member, money1):
         await ctx.send(embed=discord.Embed(title=f"{user}님의 코인에서 {money1}원을 뺏어요!",color=discord.Color.green()))
 @bot.command(name="코인설정")
 async def 관리자_돈설정(ctx, user: discord.Member, money1):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if str(ctx.author.id) in admin:
         with open('dkpoint.json', 'r') as f:
             jstring = open("dkpoint.json", "r", encoding='utf-8-sig').read()
@@ -498,6 +510,8 @@ async def 구매(ctx,an):
         json_string = json.dump(point, f, indent=2, ensure_ascii=False)
 @bot.listen()
 async def on_message(message):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if message.content.startswith("/공지"):
 
         await message.delete()
@@ -560,6 +574,8 @@ async def 핑(ctx):
 async def 경고(ctx,user:discord.Member,limit:int,*,reason='None'):
     global warnlimit
     global warn
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if not str(ctx.author.id) in admin:
         return
     jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
@@ -594,6 +610,8 @@ async def 경고(ctx,user:discord.Member,limit:int,*,reason='None'):
 @bot.command()
 async def 경고한도(ctx,limit:int):
     global warnlimit
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if not str(ctx.author.id) in admin:
         return
     with open(f"warnlimit2.json", "w+", encoding='utf-8-sig') as f:
@@ -613,6 +631,8 @@ async def 경고확인(ctx,user:discord.Member='None'):
         await ctx.send(f'{str(user)}님은 경고를 받지 않았어요!')
 @bot.command()
 async def 경고초기화(ctx,user:discord.Member):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if not str(ctx.author.id) in admin:
         return
     jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
@@ -623,6 +643,8 @@ async def 경고초기화(ctx,user:discord.Member):
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
 @bot.command()
 async def 경고삭제(ctx,user:discord.Member,limit:int):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if not str(ctx.author.id) in admin:
         return
     jstring = open("warn2.json", "r", encoding='utf-8-sig').read()
@@ -643,6 +665,8 @@ async def 경고삭제(ctx,user:discord.Member,limit:int):
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
 @bot.command()
 async def 뮤트(ctx,user:discord.Member):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if not str(ctx.author.id) in admin:
         return
     mutemessage = await ctx.send(embed=discord.Embed(title='뮤트안내',description=f'정말로 {str(user)}님을 뮤트하겠습니까?',color=discord.Color.red()))
@@ -668,6 +692,8 @@ async def 뮤트(ctx,user:discord.Member):
             await mutemessage.edit(embed=discord.Embed(title='취소됨',color=discord.Color.red()))
 @bot.command()
 async def 언뮤트(ctx,user:discord.Member):
+    jstring = open("admin.json", "r", encoding='utf-8-sig').read()
+    admin = json.loads(jstring)
     if not str(ctx.author.id) in admin:
         return
     mutemessage = await ctx.send(embed=discord.Embed(title='뮤트안내',description=f'정말로 {str(user)}님을 언뮤트하겠습니까?',color=discord.Color.red()))
