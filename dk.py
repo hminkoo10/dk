@@ -780,4 +780,18 @@ async def 관리자추가(ctx,user:discord.Member):
     with open("admin.json", "w+", encoding='utf-8-sig') as f:
         json_string = json.dump(admin, f, indent=2, ensure_ascii=False)
     await ctx.message.add_reaction('<a:complete:760472208774135868>')
+@bot.command()
+async def 룰렛(ctx,*,ctn):
+    import random,asyncio
+    contents = ctn.split(' ')
+    a = random.choice(contents)
+    b = await ctx.send("봇의 선택은?!")
+    await asyncio.sleep(2)
+    await b.edit(content="3")
+    await asyncio.sleep(1)
+    await b.edit(content="2")
+    await asyncio.sleep(1)
+    await b.edit(content="1")
+    await asyncio.sleep(1)
+    await b.edit(content=f"{a}!!")
 bot.run('Nzg3NTUzNTQ0ODA2NzI3Njgx.X9WoZQ.v_oKVsQU8IVTf2h5fPqK0Hh1xo0')
